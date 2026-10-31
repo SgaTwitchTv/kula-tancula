@@ -1,0 +1,22 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import crypto from 'node:crypto';
+const root = path.dirname(decodeURIComponent(new URL(import.meta.url).pathname.replace(/^\/([A-Za-z]:)/,'$1')));
+const app=path.join(root,'ballin-studios');
+const photos=path.join(app,'public/photos/licensed');
+const candidates=JSON.parse(fs.readFileSync(path.join(root,'licensed-photo-candidates.json'),'utf8'));
+const outputs={'hip-hop':'hip-hop-clean.png',studio:'studio-sway.png',together:'together-clean.png',practice:'practice-clean.png',rehearsal:'rehearsal-clean.png'};
+const hash=p=>crypto.createHash('sha256').update(fs.readFileSync(p)).digest('hex');
+const records=candidates.map(p=>({...p,file:'photos/licensed/'+(outputs[p.key]||p.key+'.jpg'),license:'Pexels License',licenseUrl:'https://www.pexels.com/license/',checkedAt:'2026-10-31',downloadUrl:`https://images.pexels.com/photos/${p.id}/pexels-photo-${p.id}.jpeg?auto=compress&cs=srgb&w=1800`,originalSha256:hash(path.join(photos,p.key+'.jpg')),publishedSha256:hash(path.join(photos,outputs[p.key]||p.key+'.jpg')),edit:p.key==='studio'?'Wizualizacja AI: logo SWAY na ścianie i podłodze pustej sali.':outputs[p.key]?'Retusz AI: usunięcie drobnych fizycznych oznaczeń marki; bez dodawania logo na osobach.':'Bez retuszu; kadrowanie CSS.'}));
+fs.writeFileSync(path.join(app,'PHOTO-LICENSES.json'),JSON.stringify(records,null,2)+'\n');
+fs.writeFileSync(path.join(app,'PHOTO-SOURCES.md'),'# Zdjęcia SWAY Studio\n\nSprawdzono 2026-10-31. Wszystkie osiem fotografii pochodzi z Pexels. [Licencja Pexels](https://www.pexels.com/license/) pozwala na bezpłatne użycie komercyjne i modyfikacje; podanie autora jest dobrowolne. To licencja stockowa, nie domena publiczna ani przeniesienie praw autorskich. Nie wolno sugerować poparcia marki przez widoczne osoby. Zdjęcia są ilustracyjne, nie dokumentują kadry, sal ani zajęć SWAY. [Zasady użycia komercyjnego i praw osób/trademarków](https://help.pexels.com/hc/en-us/articles/360042295214-Can-I-use-the-photos-and-videos-for-a-commercial-project).\n\n| Plik | Autor i źródło | Zmiany |\n| --- | --- | --- |\n'+records.map(p=>`| ${p.file} | [${p.author} · #${p.id}](${p.page}) | ${p.edit} |`).join('\n')+'\n\nŹródła i link do licencji są dostępne w stopce strony. Pełny rejestr plików, adresów pobrania i sum SHA-256: PHOTO-LICENSES.json. Oryginały zachowano poza publicznym katalogiem aplikacji w ../licensed-photo-research/originals/. Zdjęcia Egurrola wycofano z publikacji. Retusz: IMAGE-EDIT-PROMPTS.md.\n');
+fs.writeFileSync(path.join(app,'BRANDING.md'),'# SWAY Studio\n\nNazwa: SWAY Studio. Założycielka: Julia Brejnak. Kolory: turkus #2BD1EB, czerń #08090C, biel i szarość.\n\nLogo: zatwierdzony markerowy napis SWAY STUDIO, public/branding/sway-marker.png. PNG ma czarne tło; interfejs kadruje go CSS-em.\n\nFotografie: osiem zdjęć Pexels. Logo SWAY dodano przy użyciu AI jedynie do pustej sali jako wizualizację ściany i podłogi. Z czterech zdjęć usunięto drobne oznaczenia innych marek. Nie dodawano oznaczeń szkoły na modelach. Rejestr licencji: PHOTO-SOURCES.md i PHOTO-LICENSES.json; prompty: IMAGE-EDIT-PROMPTS.md.\n');
+let readme=fs.readFileSync(path.join(app,'README.md'),'utf8').replace('Nazwa marki i ksywa założycielki','Nazwa marki i imię założycielki').replace('Fotografie pochodzą z egurrola.com i są oznaczonym materiałem referencyjnym.','Fotografie pochodzą z Pexels i są używane na licencji dopuszczającej bezpłatne zastosowania komercyjne oraz modyfikacje. Logo w pustej sali to wizualizacja AI.');
+fs.writeFileSync(path.join(app,'README.md'),readme);
+const evidence=path.join(root,'licensed-photo-research/originals');
+const retired=path.join(root,'licensed-photo-research/retired-egurrola');
+fs.mkdirSync(evidence,{recursive:true});fs.mkdirSync(retired,{recursive:true});
+for(const p of candidates)fs.copyFileSync(path.join(photos,p.key+'.jpg'),path.join(evidence,p.key+'.jpg'));
+for(const key of Object.keys(outputs))fs.renameSync(path.join(photos,key+'.jpg'),path.join(evidence,key+'.jpg'));
+for(const name of ['choreo.jpg','crew-sway.png','dance-world-sway.png','hip-hop.jpg','people-sway.png','program.jpg','stage.jpg','sway-kids.jpg']){const old=path.join(app,'public/photos',name);if(fs.existsSync(old))fs.renameSync(old,path.join(retired,name));}
+console.log('8 licensed photos registered; old published photos retired.');

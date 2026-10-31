@@ -1,0 +1,46 @@
+import {readFileSync,writeFileSync} from 'node:fs';
+const root = 'C:/Users/konra/OneDrive/Dokumenty/ChatGPT/Strona JuliogollaDens/ballin-studios/';
+let main = readFileSync(root+'src/main.ts','utf8');
+main = main.replace('<a href="#grafik">Grafik</a>','<a href="#grafik">Grafik</a><a href="#galeria">Galeria</a>');
+main = main.replace('src="/hero.png" alt="Tancerze hip-hopu w jasnym studiu — wizualizacja Ballin’ Studios"','src="/photos/crew.jpg" alt="Formacja Swagg 2 podczas występu — zdjęcie referencyjne Egurrola Dance Studio"');
+main = main.replace('WIZUALIZACJA KONCEPCJI · AI','FOTOGRAFIA REFERENCYJNA · EGURROLA.COM');
+main = main.replace('<h2>Trochę luzu.<br>Dużo <span class="serif">zajawki.</span></h2></div>', '<h2>Trochę luzu.<br>Dużo <span class="serif">zajawki.</span></h2><figure class="intro-photo"><img src="/photos/dance-world.jpg" alt="Tancerze w choreografii scenicznej — materiał referencyjny Egurrola" width="692" height="559" loading="lazy"><figcaption>Sceniczna energia / Egurrola Dance Studio</figcaption></figure></div>');
+main = main.replace('<div class="course-art art-one"><span>bounce.</span><img src="/mark.svg" alt=""/></div>','<div class="course-art art-one"><img class="course-photo" src="/photos/hip-hop.jpg" alt="Tancerz hip-hopu — fotografia Egurrola Dance Studio" width="800" height="800" loading="lazy"><span>bounce.</span></div>');
+main = main.replace('<div class="course-art art-two"><span>flow.</span><div class="orbit"></div></div>','<div class="course-art art-two"><img class="course-photo" src="/photos/choreo.jpg" alt="Tancerz commercial w ruchu — fotografia Egurrola Dance Studio" width="800" height="800" loading="lazy"><span>flow.</span></div>');
+main = main.replace('<div class="course-art art-three"><span>play.</span><div class="asterisk">✳</div></div>','<div class="course-art art-three"><img class="course-photo" src="/photos/young-ballers.jpg" alt="Młoda tancerka hip-hopu — fotografia Egurrola Dance Studio" width="800" height="800" loading="lazy"><span>play.</span></div>');
+main = main.replace('Oferta koncepcyjna. Grupy, wiek uczestników i poziomy potwierdzimy przed startem.', 'Oferta koncepcyjna. Grupy, wiek uczestników i poziomy potwierdzimy przed startem. Zdjęcia referencyjne: <a href="https://egurrola.com/style-taneczne/" target="_blank" rel="noopener noreferrer">Egurrola Dance Studio ↗</a>.');
+main = main.replace('<div class="schedule-tabs" role="group"', '<figure class="schedule-photo"><img src="/photos/program.jpg" alt="Zajęcia taneczne w Egurrola Dance Studio — zdjęcie referencyjne" width="692" height="559" loading="lazy"><figcaption>Na sali / materiał referencyjny Egurrola</figcaption></figure><div class="schedule-tabs" role="group"');
+const gallery = `
+<section class="gallery section" id="galeria"><div class="section-heading"><div><p class="eyebrow">04 / ZOBACZ TEN KLIMAT</p><h2>Mniej gadania.<br>Więcej <span class="serif">tańczenia.</span></h2></div><p>Ruch, ludzie i światło sceny.<br>Fotograficzny moodboard Ballin’.</p></div><div class="gallery-filters" role="group" aria-label="Filtruj zdjęcia"><button class="active" aria-pressed="true" data-gallery-filter="all">Wszystko</button><button aria-pressed="false" data-gallery-filter="street">Street & flow</button><button aria-pressed="false" data-gallery-filter="stage">Na scenie</button><button aria-pressed="false" data-gallery-filter="studio">Na sali</button></div><div class="gallery-grid">
+<button class="gallery-item gallery-wide" data-gallery-category="stage" data-photo="crew.jpg" data-caption="Formacja Swagg 2 podczas występu · Egurrola Dance Studio"><img src="/photos/crew.jpg" alt="Formacja hip-hopowa Swagg 2 podczas występu" width="1024" height="683" loading="lazy"><span>01 / CREW ENERGY <b>↗</b></span></button>
+<button class="gallery-item gallery-tall" data-gallery-category="street" data-photo="hip-hop.jpg" data-caption="Hip-hop · Egurrola Dance Studio"><img src="/photos/hip-hop.jpg" alt="Tancerz hip-hopu w dynamicznej pozie" width="800" height="800" loading="lazy"><span>02 / OWN YOUR STYLE <b>↗</b></span></button>
+<button class="gallery-item" data-gallery-category="street" data-photo="choreo.jpg" data-caption="Commercial · Egurrola Dance Studio"><img src="/photos/choreo.jpg" alt="Tancerz commercial w ruchu" width="800" height="800" loading="lazy"><span>03 / FIND YOUR FLOW <b>↗</b></span></button>
+<button class="gallery-item" data-gallery-category="stage" data-photo="dance-world.jpg" data-caption="Choreografia sceniczna · Egurrola Dance Studio"><img src="/photos/dance-world.jpg" alt="Zespół tancerzy podczas choreografii scenicznej" width="692" height="559" loading="lazy"><span>04 / SPOTLIGHT <b>↗</b></span></button>
+<button class="gallery-item gallery-wide" data-gallery-category="studio" data-photo="program.jpg" data-caption="Zajęcia taneczne · Egurrola Dance Studio"><img src="/photos/program.jpg" alt="Uczestnicy podczas zajęć tanecznych" width="692" height="559" loading="lazy"><span>05 / ON THE FLOOR <b>↗</b></span></button>
+<button class="gallery-item" data-gallery-category="street" data-photo="young-ballers.jpg" data-caption="Hip-hop dla dzieci · Egurrola Dance Studio"><img src="/photos/young-ballers.jpg" alt="Młoda tancerka hip-hopu" width="800" height="800" loading="lazy"><span>06 / YOUNG ENERGY <b>↗</b></span></button>
+<button class="gallery-item" data-gallery-category="studio" data-photo="people.jpg" data-caption="Taneczna społeczność · Egurrola Dance Studio"><img src="/photos/people.jpg" alt="Uczestnicy tanecznego wydarzenia wspólnie kibicujący" width="692" height="559" loading="lazy"><span>07 / FIND YOUR PEOPLE <b>↗</b></span></button>
+<button class="gallery-item gallery-wide" data-gallery-category="stage" data-photo="stage.jpg" data-caption="Finał spektaklu Boxality · Egurrola Dance Studio"><img src="/photos/stage.jpg" alt="Finał spektaklu tanecznego Boxality" width="1600" height="589" loading="lazy"><span>08 / FEEL THE STAGE <b>↗</b></span></button>
+</div><p class="small-note photo-credit">Wszystkie fotografie w tym demie pochodzą z <a href="https://egurrola.com/" target="_blank" rel="noopener noreferrer">egurrola.com ↗</a> i służą jako materiały referencyjne. Przedstawiają tancerzy, wydarzenia i przestrzenie Egurrola Dance Studio, a nie ekipę ani lokal Ballin’ Studios.</p></section>
+`;
+main = main.replace('<section class="faq section"', gallery+'<section class="faq section"');
+main = main.replace('04 / DOBRZE WIEDZIEĆ','05 / DOBRZE WIEDZIEĆ');
+main = main.replace('Koncepcja demonstracyjna · zdjęcie wygenerowane przez AI','Koncepcja demonstracyjna · fotografie: <a href="https://egurrola.com/" target="_blank" rel="noopener noreferrer">Egurrola Dance Studio ↗</a>');
+main = main.replace('<dialog id="join-dialog">','<dialog id="photo-dialog" class="photo-dialog"><button class="dialog-close" aria-label="Zamknij zdjęcie">×</button><figure><img id="expanded-photo" alt=""><figcaption id="expanded-caption"></figcaption></figure><a href="https://egurrola.com/" target="_blank" rel="noopener noreferrer">Zdjęcie referencyjne · egurrola.com ↗</a></dialog>\n<dialog id="join-dialog">');
+main += `
+const photoDialog = document.querySelector<HTMLDialogElement>('#photo-dialog')!;
+document.querySelectorAll<HTMLButtonElement>('[data-photo]').forEach(button => button.addEventListener('click', () => {
+  const image = document.querySelector<HTMLImageElement>('#expanded-photo')!;
+  image.src = '/photos/' + button.dataset.photo;
+  image.alt = button.querySelector('img')!.alt;
+  document.querySelector('#expanded-caption')!.textContent = button.dataset.caption ?? '';
+  photoDialog.showModal();
+}));
+document.querySelectorAll<HTMLButtonElement>('[data-gallery-filter]').forEach(button => button.addEventListener('click', () => {
+  document.querySelectorAll<HTMLButtonElement>('[data-gallery-filter]').forEach(b => { const selected = b === button; b.classList.toggle('active', selected); b.setAttribute('aria-pressed', String(selected)); });
+  document.querySelectorAll<HTMLElement>('[data-gallery-category]').forEach(item => { item.hidden = button.dataset.galleryFilter !== 'all' && item.dataset.galleryCategory !== button.dataset.galleryFilter; });
+}));
+`;
+writeFileSync(root+'src/main.ts',main);
+const paths=['src/theme.css','src/style.css','public/logo.svg','public/mark.svg','BRANDING.md','README.md'];
+const palette={'#0647ff':'#2bd1eb','#6d96ff':'#2bd1eb','#91b0ff':'#8be9f5','#e2eaff':'#08333a','#245eff':'#59deef','#5c8aff':'#2bd1eb','#759cff':'#2bd1eb','#a8c0ff':'#80e4f1','#e0e8ff':'#123139','#113190':'#123a40','#3073a9':'#2bd1eb','#497c9e':'#2bd1eb','#c7dfef':'#59deef','#344b5e':'#23383d','#446c89':'#2bd1eb','#789db5':'#2bd1eb','#dcecf6':'#2bd1eb','#c4d9e7':'#88e5f2','#e6eff5':'#2bd1eb','#08090c':'#08090c'};
+for(const path of paths){let s=readFileSync(root+path,'utf8'); for(const [a,b] of Object.entries(palette))s=s.replaceAll(a,b).replaceAll(a.toUpperCase(),b.toUpperCase());s=s.replaceAll('var(--blue-text)','var(--accent-text)').replaceAll('--blue-text:','--accent-text:').replaceAll('var(--blue)','var(--accent)').replaceAll('--blue:','--accent:').replaceAll('Electric blue identity','Turquoise identity').replaceAll('elektryczny niebieski','turkus z próbki').replaceAll('niebieskim efektem duotone','turkusowym efektem duotone');writeFileSync(root+path,s);}
