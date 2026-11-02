@@ -1,7 +1,7 @@
 import './style.css';
 import './theme.css';
 
-const mark = '<span class="sway-lockup"><img class="sway-logo" src="/branding/sway-marker.png" alt="SWAY Studio" width="1536" height="1024"></span>';
+const mark = '<span class="sway-lockup"><img class="sway-logo" src="/branding/sway-marker-transparent.png" alt="SWAY Studio" width="1536" height="1024"></span>';
 const brand = mark;
 const arrow = '<span aria-hidden="true">↗</span>';
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `

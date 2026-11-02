@@ -1,5 +1,7 @@
 # SWAY Studio
 
+Animowany wariant: `/motion/`. Przezroczysty logotyp: `public/branding/sway-marker-transparent.png`. Interaktywny drugi outfit i większy opis Julii: `src/motion.ts`, `src/outfit.css`. Szczegóły i prompty: `LOGO-OUTFIT-PROMPTS.md`.
+
 Responsywne demo szkoły tańca w TypeScript i Vite. Czerń, turkus z próbki, białe i szare dodatki. Branding: turkusowy markerowy logotyp SWAY STUDIO.
 
 ## Uruchomienie
